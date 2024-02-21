@@ -7,25 +7,27 @@ function removeElement(element) {
   element.closest(".card").remove();
 }
 
-function updateCard(cardElement, cardData) {
-  cardElement.querySelector(".card__image").src = cardData.link;
-  cardElement.querySelector(".card__title").textContent = cardData.title;
-}
-
-function addCards(card) {
+function createCard(cardData, deleteHandler) {
   const newCard = template.content.cloneNode(true);
 
-  updateCard(newCard, card);
+  newCard.querySelector(".card__image").src = cardData.link;
+  newCard.querySelector(".card__title").textContent = cardData.name;
+  newCard.querySelector(".card__image").alt = cardData.name;
 
-  newCard.querySelector(".card").addEventListener("click", (event) => {
-    if (event.target.classList.contains("card__delete-button")) {
-      removeElement(event.target);
-    }
-  });
+  const deleteButton = newCard.querySelector(".card__delete-button");
+  deleteButton.addEventListener("click", deleteHandler);
 
-  gallery.append(newCard);
+  return newCard;
 }
 
+function addCard(cardElement) {
+  gallery.append(cardElement);
+}
+const init = () => {
 initialCards.forEach((element) => {
-  addCards(element);
-});
+  const card = createCard(element, (event) => {
+    removeElement(event.target);
+  });
+  addCard(card);
+})};
+init()
