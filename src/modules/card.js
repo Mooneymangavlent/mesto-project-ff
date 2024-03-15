@@ -1,4 +1,4 @@
- const initialCards = [
+export const initialCards = [
   {
     name: "Архыз",
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
@@ -24,7 +24,9 @@
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
 ];
-function createCard(cardData) {
+
+
+export function createCard(cardData, removeCallback, toggleLikeCallback, openImageCallback) {
   const cardElement = document.querySelector("#card-template").content.querySelector(".card").cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
   const cardTitle = cardElement.querySelector(".card__title");
@@ -35,35 +37,9 @@ function createCard(cardData) {
   cardImage.alt = cardData.name;
   cardTitle.textContent = cardData.name;
 
-  deleteButton.addEventListener("click", removeElement);
-  likeButton.addEventListener("click", toggleLike);
-  cardImage.addEventListener("click", openImagePopup);
+  deleteButton.addEventListener("click", removeCallback);
+  likeButton.addEventListener("click", toggleLikeCallback);
+  cardImage.addEventListener("click", openImageCallback);
 
   return cardElement;
 }
-
-function removeElement(event) {
-  event.currentTarget.closest(".card").remove();
-}
-
-function toggleLike(event) {
-  event.currentTarget.classList.toggle("card__like-button_is-active");
-}
-
-function openImagePopup(event) {
-  const card = event.currentTarget.closest(".card");
-  const imageSrc = card.querySelector(".card__image").src;
-  const cardTitle = card.querySelector(".card__title").textContent;
-
-  const imagePopup = document.querySelector(".popup_type_image");
-  const imagePopupImage = imagePopup.querySelector(".popup__image");
-  imagePopupImage.src = imageSrc;
-  imagePopupImage.alt = cardTitle;
-
-  const imageCaption = imagePopup.querySelector(".popup__caption");
-  imageCaption.textContent = cardTitle;
-
-  imagePopup.classList.add("popup_opened");
-}
-
-export { createCard, openImagePopup, initialCards};
