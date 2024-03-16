@@ -42,16 +42,8 @@ function openEditPopup() {
   descriptionInput.value = profileDescription.textContent;
 }
 
-function closeEditPopup() {
-  closeModal(editPopup);
-}
-
 function openNewPlacePopup() {
   openModal(newPlacePopup);
-}
-
-function closeNewPlacePopup() {
-  closeModal(newPlacePopup);
 }
 
 function saveEditChanges(event) {
