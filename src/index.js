@@ -2,7 +2,7 @@
 import "./styles/index.css";
 import { initialCards } from "./modules/initialCards";
 import { createCard, removeElement, toggleLike } from "./modules/card";
-import { openModal, closeModal } from "./modules/modal";
+import { openModal, closeModal, handleEscape } from "./modules/modal";
 
 const gallery = document.querySelector(".places__list");
 const imagePopup = document.querySelector(".popup_type_image");
@@ -59,34 +59,19 @@ function saveNewPlace(event) {
     name: placeNameInput.value,
     link: linkInput.value,
   };
-  const card = createCard(cardData, removeElement, toggleLike, openImagePopup);
-  renderCard(card);
+  renderCard(cardData);
   event.target.closest("form").reset();
   closeModal(newPlacePopup);
 }
 
-function renderCard(cardElement, method = "prepend") {
-  gallery[method](cardElement);
-}
-
-function handleEscape(event) {
-  if (event.key === "Escape") {
-    const openedPopup = document.querySelector(".popup_opened");
-    if (openedPopup) {
-      closeModal(openedPopup);
-    }
-  }
+function renderCard(cardData, method = "prepend") {
+  const card = createCard(cardData, removeElement, toggleLike, openImagePopup);
+  gallery[method](card);
 }
 
 function initialize() {
   initialCards.forEach((cardData) => {
-    const card = createCard(
-      cardData,
-      removeElement,
-      toggleLike,
-      openImagePopup
-    );
-    renderCard(card);
+    renderCard(cardData);
   });
 
   const editButton = document.querySelector(".profile__edit-button");
@@ -105,8 +90,6 @@ function initialize() {
       }
     });
   });
-
-  document.addEventListener("keydown", handleEscape);
 
   const profileForm = document.forms["edit-profile"];
   profileForm.addEventListener("submit", saveEditChanges);

@@ -1,6 +1,13 @@
-
-export function createCard(cardData, removeCallback, toggleLikeCallback, openImageCallback) {
-  const cardElement = document.querySelector("#card-template").content.querySelector(".card").cloneNode(true);
+export function createCard(
+  cardData,
+  removeCallback,
+  toggleLikeCallback,
+  openImageCallback
+) {
+  const cardElement = document
+    .querySelector("#card-template")
+    .content.querySelector(".card")
+    .cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
   const cardTitle = cardElement.querySelector(".card__title");
   const deleteButton = cardElement.querySelector(".card__delete-button");
@@ -17,10 +24,10 @@ export function createCard(cardData, removeCallback, toggleLikeCallback, openIma
   return cardElement;
 }
 
- export function removeElement(event) {
+export function removeElement(event) {
   event.currentTarget.closest(".card").remove();
 }
 
- export function toggleLike(event) {
+export function toggleLike(event) {
   event.currentTarget.classList.toggle("card__like-button_is-active");
 }
